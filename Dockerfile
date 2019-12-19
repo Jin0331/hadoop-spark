@@ -26,7 +26,7 @@ RUN sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = F
 RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py
 
 # spark 2.4.4 without Hadoop
-RUN wget https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.4-bin-without-hadoop.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-without-hadoop.tgz
 RUN tar -xvzf spark-2.4.4-bin-without-hadoop.tgz -C /usr/local
 RUN cd /usr/local && ln -s ./spark-2.4.4-bin-without-hadoop spark
 RUN rm -f /spark-2.4.4-bin-without-hadoop.tgz
