@@ -1,14 +1,23 @@
 ## kmu-bigdata/ubuntu-spark 활용
 
+### 수정사항
+
+* python3.7, spark-2.4.4, jupyter install - 19.12.19
+
 - - -
+
 ### Docker Swarm init
 ``docker swarm init --advertise-addr [server IP]``
- * node에서 ``docker swarm join --token [token]``
- * token re-load ``docker swarm join-token worker``
 
+ * node에서 ``docker swarm join --token [token]``
+ 
+ * token re-load ``docker swarm join-token worker``
+ 
 ### Docker network create
 ``docker network create -d overlay hadoop --attachable``
+
 ``docker network ls``
+
 ``docker network inspect hadoop`` 
 
 ### Master
@@ -17,10 +26,15 @@
 
 #### HDFS namenode format & Spark standalone 
 ``$HADOOP_HOME/etc/hadoop/worker`` 수정
+
 ``hdfs namenode -format``
+
 ``$HADOOP_HOME/sbin/start-dfs.sh ## no yarn start!``
 
 ``$SPARK_HOME/conf/slaves`` 수정
+
+``$SPARK_HOME/sbin/start-master.sh``
+
 ``$SPARK_HOME/sbin/start-slaves.sh``
 
 ### Slaves
