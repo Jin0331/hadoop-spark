@@ -62,7 +62,6 @@ RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 COPY bootstrap.sh /etc/bootstrap.sh
 RUN chown root.root /etc/bootstrap.sh
 RUN chmod 700 /etc/bootstrap.sh
-RUN chmod +x /usr/local/spark/run-sparkshell.sh
 
 # Spark Web UI, History Server Port
 EXPOSE 8080 18080
