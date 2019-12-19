@@ -53,7 +53,7 @@ RUN echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf
 RUN echo export SPARK_CLASSPATH=$SPARK_HOME/jars >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export JAVA_HOME=/usr/java/default >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export PYSPARK_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
-RUN ehco export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
+RUN echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
 
 ## spark-defaults config
 ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
