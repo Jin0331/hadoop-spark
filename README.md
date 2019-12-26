@@ -3,6 +3,7 @@
 ### 수정사항
 
 * python3.7, spark-2.4.4, jupyter install - 19.12.19
+* nano adding - 19.12.26
 
 - - -
 

@@ -3,6 +3,9 @@ MAINTAINER sempre813
 
 USER root
 
+# nano
+RUN apt-get update && apt-get install -y nano
+
 # scala
 RUN apt-get update
 RUN apt-get install -y scala
@@ -46,8 +49,8 @@ ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_CORES=2 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_MEMORY=14G >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_MEMORY=18G >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_CLASSPATH=$SPARK_HOME/jars >> $SPARK_HOME/conf/spark-env.sh
