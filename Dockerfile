@@ -47,6 +47,9 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$LD_LIBRARY_PATH
 ENV SPARK_HOME /usr/local/spark
 ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
+## install findspkar
+RUN pip3 install findspark
+
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
 RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
