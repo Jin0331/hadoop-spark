@@ -32,6 +32,11 @@ RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True
 RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 RUN tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 RUN mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode
+RUN rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+
+## vscode password
+RUN echo "export PASSWORD='{sempre813!}'" >> ~/.bashrc
+RUN source ~/.bashrc
 
 # vsocde port binding
 EXPOSE 8989
