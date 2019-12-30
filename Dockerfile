@@ -28,6 +28,15 @@ RUN sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter
 RUN sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = False/" ~/.jupyter/jupyter_notebook_config.py
 RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py
 
+# vscode
+RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+RUN tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+RUN mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode
+
+# vsocde port binding
+EXPOSE 8989
+
+
 # spark 2.4.4 without Hadoop
 RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-without-hadoop.tgz
 RUN tar -xvzf spark-2.4.4-bin-without-hadoop.tgz -C /usr/local
@@ -47,7 +56,7 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$LD_LIBRARY_PATH
 ENV SPARK_HOME /usr/local/spark
 ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
-## install findspkar
+## install findspark
 RUN pip3 install findspark
 
 ## spark-env.sh config
