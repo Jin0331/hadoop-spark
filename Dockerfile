@@ -37,7 +37,7 @@ RUN rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 ## vscode port binding & password
 RUN export PASSWORD="sempre813!"
 EXPOSE 8989
-RUN ./vscode/code-server --port 8989
+#RUN ./vscode/code-server --port 8989
 
 
 # spark 2.4.4 without Hadoop
