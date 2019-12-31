@@ -34,12 +34,10 @@ RUN tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 RUN mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode
 RUN rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 
-## vscode password
-RUN echo "export PASSWORD='{sempre813!}'" >> ~/.bashrc
-RUN source ~/.bashrc
-
-# vsocde port binding
+## vscode port binding & password
+RUN export PASSWORD="sempre813!"
 EXPOSE 8989
+RUN ./vscode/code-server --port 8989
 
 
 # spark 2.4.4 without Hadoop
@@ -75,8 +73,10 @@ RUN echo export JAVA_HOME=/usr/java/default >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export PYSPARK_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
 
-## spark-defaults config
-ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+## spark-defaults config & slaves
+#ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+
+ADD workers $HADOOP_HOME/etc/hadoop/workers
 RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 
 COPY bootstrap.sh /etc/bootstrap.sh
