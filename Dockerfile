@@ -29,7 +29,7 @@ RUN sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = F
 RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py
 
 # jupyter notebook theme
-RUN pip3 install jupyter jupyterthemes
+RUN pip3 install jupyterthemes
 RUN jt -t grade3 -f roboto -fs 12 -altp -tfs 12 -nfs 12 -nf roboto -tf roboto -cellw 80% -T -N
 
 # vscode
