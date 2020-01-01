@@ -28,6 +28,10 @@ RUN sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter
 RUN sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = False/" ~/.jupyter/jupyter_notebook_config.py
 RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py
 
+# jupyter notebook theme
+RUN pip3 install jupyter jupyterthemes
+RUN jt -t grade3 -f roboto -fs 12 -altp -tfs 12 -nfs 12 -nf roboto -tf roboto -cellw 80% -T -N
+
 # vscode
 RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
 RUN tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
