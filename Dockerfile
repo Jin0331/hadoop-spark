@@ -30,7 +30,9 @@ RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True
 
 # jupyter notebook theme
 RUN pip3 install jupyterthemes
-RUN jt -t grade3 -f roboto -fs 12 -altp -tfs 12 -nfs 12 -nf roboto -tf roboto -cellw 80% -T -N
+#RUN jt -t grade3 -f roboto -fs 12 -altp -tfs 12 -nfs 12 -nf roboto -tf roboto -cellw 80% -T -N
+RUN jt -t monokai -f anka -fs 12 -nf anka -tf anka -dfs 11 -tfs 12 -ofs 11 -T -N -cellw 85% -kl
+
 
 # vscode
 RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
