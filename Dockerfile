@@ -90,9 +90,13 @@ RUN chown root.root /etc/bootstrap.sh
 RUN chmod 700 /etc/bootstrap.sh
 
 # Spark Web UI, History Server Port
+
 EXPOSE 8080 18080
 
 EXPOSE 7077
+
+# diver_port
+EXPOSE 9898 9797
 
 #install sbt
 RUN apt-get install apt-transport-https
