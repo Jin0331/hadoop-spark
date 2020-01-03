@@ -46,6 +46,14 @@ EXPOSE 8989
 #RUN ./vscode/code-server --port 8989
 
 
+# redis
+RUN apt-get update && apt-get install -y maven
+RUN git clone https://github.com/RedisLabs/spark-redis.git
+RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
+#### jar---- > /spark-redis/target/spark-redis-2.4.1-SNAPSHOT-jar-with-dependencies.jar #####
+
+
+
 # spark 2.4.4 without Hadoop
 RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-without-hadoop.tgz
 RUN tar -xvzf spark-2.4.4-bin-without-hadoop.tgz -C /usr/local

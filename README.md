@@ -5,6 +5,7 @@
 * python3.7, spark-2.4.4, jupyter install - 19.12.19
 * nano, findspark - 19.12.26
 * vscode & worker change - 19.12.31
+* redis adding - 20.01.03
 
 - - -
 
