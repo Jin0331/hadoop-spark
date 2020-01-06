@@ -47,11 +47,14 @@ EXPOSE 8989
 
 
 # redis
-RUN apt-get update && apt-get install -y maven
-RUN git clone https://github.com/RedisLabs/spark-redis.git
-RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
+#RUN apt-get update && apt-get install -y maven
+#RUN git clone https://github.com/RedisLabs/spark-redis.git
+#RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
 #### jar---- > /spark-redis/target/spark-redis-2.4.1-SNAPSHOT-jar-with-dependencies.jar #####
 
+# postgreSQL
+#RUN mkdir spark-postgre
+RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
 
 
 # spark 2.4.4 without Hadoop
