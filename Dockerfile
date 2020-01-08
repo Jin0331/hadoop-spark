@@ -47,8 +47,8 @@ EXPOSE 8989
 
 
 # redis
-#RUN apt-get update && apt-get install -y maven
-#RUN git clone https://github.com/RedisLabs/spark-redis.git
+RUN apt-get update && apt-get install -y maven
+RUN git clone https://github.com/RedisLabs/spark-redis.git
 #RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
 #### jar---- > /spark-redis/target/spark-redis-2.4.1-SNAPSHOT-jar-with-dependencies.jar #####
 
@@ -82,7 +82,7 @@ RUN pip3 install findspark
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
 RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_MEMORY=18G >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_MEMORY=24G >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_CLASSPATH=$SPARK_HOME/jars >> $SPARK_HOME/conf/spark-env.sh
