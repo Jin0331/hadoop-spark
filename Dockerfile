@@ -78,6 +78,8 @@ ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
 ## install findspark
 RUN pip3 install findspark
+RUN pip3 install pyarrow
+RUN pip3 install pandas
 
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
