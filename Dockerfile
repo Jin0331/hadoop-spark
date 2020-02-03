@@ -94,6 +94,8 @@ RUN echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark
 
 ## spark-defaults config & slaves
 #ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+RUN mkdir /tmp/spark-events
+RUN $SPARK_HOME/sbin/start-history-server.sh
 
 ADD workers $HADOOP_HOME/etc/hadoop/workers
 RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
