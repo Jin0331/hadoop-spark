@@ -6,6 +6,7 @@
 * nano, findspark - 19.12.26
 * vscode & worker change - 19.12.31
 * redis adding - 20.01.03
+* pyarrow & spark 2.4.5
 
 - - -
 
