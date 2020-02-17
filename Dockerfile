@@ -83,8 +83,8 @@ RUN pip3 install pandas
 
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_MEMORY=24G >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_CORES=7 >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_MEMORY=25G >> $SPARK_HOME/conf/spark-env.sh
 RUN echo ARROW_PRE_0_15_IPC_FORMAT=1 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf/spark-env.sh
