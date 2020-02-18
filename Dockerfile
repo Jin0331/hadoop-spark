@@ -58,10 +58,10 @@ RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
 
 
 # spark 2.4.4 without Hadoop
-RUN wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-without-hadoop.tgz
-RUN tar -xvzf spark-2.4.4-bin-without-hadoop.tgz -C /usr/local
-RUN cd /usr/local && ln -s ./spark-2.4.4-bin-without-hadoop spark
-RUN rm -f /spark-2.4.4-bin-without-hadoop.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-without-hadoop.tgz
+RUN tar -xvzf spark-2.4.5-bin-without-hadoop.tgz -C /usr/local
+RUN cd /usr/local && ln -s ./spark-2.4.5-bin-without-hadoop spark
+RUN rm -f /spark-2.4.5-bin-without-hadoop.tgz
 
 # ENV hadoop
 ENV HADOOP_COMMON_HOME /usr/local/hadoop
@@ -83,7 +83,7 @@ RUN pip3 install pandas
 
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_CORES=7 >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo SPARK_WORKER_MEMORY=25G >> $SPARK_HOME/conf/spark-env.sh
 RUN echo ARROW_PRE_0_15_IPC_FORMAT=1 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
