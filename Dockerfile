@@ -47,14 +47,14 @@ EXPOSE 8989
 
 
 # redis
-RUN apt-get update && apt-get install -y maven
-RUN git clone https://github.com/RedisLabs/spark-redis.git
+#RUN apt-get update && apt-get install -y maven
+#RUN git clone https://github.com/RedisLabs/spark-redis.git
 #RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
 #### jar---- > /spark-redis/target/spark-redis-2.4.1-SNAPSHOT-jar-with-dependencies.jar #####
 
 # postgreSQL
 #RUN mkdir spark-postgre
-RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
+#RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
 
 
 # spark 2.4.4 without Hadoop
@@ -101,9 +101,9 @@ RUN $SPARK_HOME/sbin/start-history-server.sh
 ADD workers $HADOOP_HOME/etc/hadoop/workers
 RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 
-COPY bootstrap.sh /etc/bootstrap.sh
-RUN chown root.root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
+#COPY bootstrap.sh /etc/bootstrap.sh
+#RUN chown root.root /etc/bootstrap.sh
+#RUN chmod 700 /etc/bootstrap.sh
 
 # Spark Web UI, History Server Port
 
@@ -122,4 +122,4 @@ RUN apt-get update
 RUN apt-get -y install sbt
 
 
-ENTRYPOINT ["/etc/bootstrap.sh"]
+#ENTRYPOINT ["/etc/bootstrap.sh"]
