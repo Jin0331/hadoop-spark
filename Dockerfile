@@ -57,7 +57,7 @@ EXPOSE 8989
 #RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
 
 
-# spark 2.4.4 without Hadoop
+# spark 2.4.5 without Hadoop
 RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-without-hadoop.tgz
 RUN tar -xvzf spark-2.4.5-bin-without-hadoop.tgz -C /usr/local
 RUN cd /usr/local && ln -s ./spark-2.4.5-bin-without-hadoop spark
@@ -104,6 +104,11 @@ RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 #COPY bootstrap.sh /etc/bootstrap.sh
 #RUN chown root.root /etc/bootstrap.sh
 #RUN chmod 700 /etc/bootstrap.sh
+
+#COPY .py files
+COPY hadoop_spark_slaves.py
+RUN chown root.root /etc/hadoop_spark_slaves.py
+RUN chmod 700 /etc/hadoop_spark_slaves.py
 
 # Spark Web UI, History Server Port
 

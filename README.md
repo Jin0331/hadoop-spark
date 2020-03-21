@@ -2,10 +2,10 @@
 
 ### 수정사항
 
-* python3.7, spark-2.4.4, jupyter install - 19.12.19
+* python3.7, spark-2.4.5, jupyter install - 20.02.20
 * nano, findspark - 19.12.26
 * vscode & worker change - 19.12.31
-* redis adding - 20.01.03
+* redis adding - 20.01.03 ## not use
 * pyarrow & spark 2.4.5 - 20.02.27
 
 - - -
