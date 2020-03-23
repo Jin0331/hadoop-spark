@@ -106,7 +106,7 @@ RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 #RUN chmod 700 /etc/bootstrap.sh
 
 #COPY .py files
-COPY hadoop_spark_slaves.py
+COPY hadoop_spark_slaves.py /etc/hadoop_spark_slaves.py
 RUN chown root.root /etc/hadoop_spark_slaves.py
 RUN chmod 700 /etc/hadoop_spark_slaves.py
 
