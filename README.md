@@ -7,6 +7,7 @@
 * vscode & worker change - 19.12.31
 * redis adding - 20.01.03 ## not use
 * pyarrow & spark 2.4.5 - 20.02.27
+* scala UDF 추가 - 20.03.28
 
 - - -
 

@@ -83,7 +83,7 @@ RUN pip3 install pandas
 
 ## spark-env.sh config
 RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_CORES=3 >> $SPARK_HOME/conf/spark-env.sh
+RUN echo SPARK_WORKER_CORES=7 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo SPARK_WORKER_MEMORY=25G >> $SPARK_HOME/conf/spark-env.sh
 RUN echo ARROW_PRE_0_15_IPC_FORMAT=1 >> $SPARK_HOME/conf/spark-env.sh
 RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
@@ -106,20 +106,28 @@ RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 #RUN chmod 700 /etc/bootstrap.sh
 
 #COPY .py files
-COPY hadoop_spark_slaves.py /etc/hadoop_spark_slaves.py
-RUN chown root.root /etc/hadoop_spark_slaves.py
-RUN chmod 700 /etc/hadoop_spark_slaves.py
+COPY hadoop_spark_slaves.py /root/hadoop_spark_slaves.py
+COPY hdfsupload.py /root/hdfsupload.py
+
+RUN chown root.root /root/hadoop_spark_slaves.py
+RUN chmod 700 /root/hadoop_spark_slaves.py
+RUN chown root.root /root/hdfsupload.py
+RUN chmod 700 /root/hdfsupload.py
+
+#COPY scala JAR file
+COPY index2dict_2.11-0.1.jar /usr/local/spark/jars/index2dict_2.11-0.1.jar
+
+RUN chown root.root /usr/local/spark/jars/index2dict_2.11-0.1.jar
+RUN chmod 700 /usr/local/spark/jars/index2dict_2.11-0.1.jar
 
 # Spark Web UI, History Server Port
-
 EXPOSE 8080 18080
-
 EXPOSE 7077
 
 # diver_port
 EXPOSE 9898 9797
 
-#install sbt
+#install sbt for SCALA
 RUN apt-get install apt-transport-https
 RUN echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
