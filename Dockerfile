@@ -27,7 +27,6 @@ RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/c
     && tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz \
     && mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode \
     && rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
-    && export 
 
 EXPOSE 8989
 
