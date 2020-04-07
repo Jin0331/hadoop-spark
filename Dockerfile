@@ -3,73 +3,48 @@ MAINTAINER sempre813
 
 USER root
 
-# nano
-RUN apt-get update && apt-get install -y nano
+# apt-install
+RUN apt-get update \
+   && apt-get install -y nano scala python \
+                         software-properties-common \
+   && add-apt-repository ppa:deadsnakes/ppa -y \
+   && apt-get install -y build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev \
+                         python3-pip python3.7-dev python3.7 \
+   && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2
+                          
 
-# scala
-RUN apt-get update
-RUN apt-get install -y scala
-
-# python
-RUN apt-get install -y python
-
-# python3.7:latest install 
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN apt-get update && apt-get install -y build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev
-RUN apt-get update && apt-get install -y python3-pip python3.7-dev
-RUN apt-get update && apt-get install -y python3.7
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2
 
 # jupyter notebook install
-RUN pip3 install jupyter
-RUN jupyter notebook --generate-config
-RUN sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter/jupyter_notebook_config.py
-RUN sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = False/" ~/.jupyter/jupyter_notebook_config.py
-RUN sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py
-
-# jupyter notebook theme
-RUN pip3 install jupyterthemes
-#RUN jt -t grade3 -f roboto -fs 12 -altp -tfs 12 -nfs 12 -nf roboto -tf roboto -cellw 80% -T -N
-RUN jt -t monokai -f anka -fs 12 -nf anka -tf anka -dfs 11 -tfs 12 -ofs 11 -T -N -cellw 85% -kl
-
+RUN pip3 install jupyter && jupyter notebook --generate-config \
+    && sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter/jupyter_notebook_config.py \
+    && sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = False/" ~/.jupyter/jupyter_notebook_config.py \
+    && sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py \
+    && pip3 install jupyterthemes \
+    && jt -t monokai -f anka -fs 12 -nf anka -tf anka -dfs 11 -tfs 12 -ofs 11 -T -N -cellw 85% -kl
 
 # vscode
-RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
-RUN tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
-RUN mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode
-RUN rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz \
+    && tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz \
+    && mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode \
+    && rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+    && export 
 
-## vscode port binding & password
-RUN export PASSWORD="sempre813!"
 EXPOSE 8989
-#RUN ./vscode/code-server --port 8989
-
-
-# redis
-#RUN apt-get update && apt-get install -y maven
-#RUN git clone https://github.com/RedisLabs/spark-redis.git
-#RUN 'cd spark-redis/ ; mvn clean package -DskipTests'
-#### jar---- > /spark-redis/target/spark-redis-2.4.1-SNAPSHOT-jar-with-dependencies.jar #####
-
-# postgreSQL
-#RUN mkdir spark-postgre
-#RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.9.jar
-
 
 # spark 2.4.5 without Hadoop
-RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-without-hadoop.tgz
-RUN tar -xvzf spark-2.4.5-bin-without-hadoop.tgz -C /usr/local
-RUN cd /usr/local && ln -s ./spark-2.4.5-bin-without-hadoop spark
-RUN rm -f /spark-2.4.5-bin-without-hadoop.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-without-hadoop.tgz \
+    && tar -xvzf spark-2.4.5-bin-without-hadoop.tgz -C /usr/local \
+    && cd /usr/local && ln -s ./spark-2.4.5-bin-without-hadoop spark \
+    && rm -f /spark-2.4.5-bin-without-hadoop.tgz
 
 # ENV hadoop
-ENV HADOOP_COMMON_HOME /usr/local/hadoop
-ENV HADOOP_HDFS_HOME /usr/local/hadoop
-ENV HADOOP_MAPRED_HOME /usr/local/hadoop
-ENV HADOOP_YARN_HOME /usr/local/hadoop
-ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
-ENV YARN_CONF_DIR /usr/local/hadoop/etc/hadoop
+ENV HADOOP_COMMON_HOME=/usr/local/hadoop \
+    HADOOP_HDFS_HOME=/usr/local/hadoop \
+    HADOOP_MAPRED_HOME=/usr/local/hadoop \
+    HADOOP_YARN_HOME=/usr/local/hadoop \
+    HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop \
+    YARN_CONF_DIR=/usr/local/hadoop/etc/hadoop
+
 ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$LD_LIBRARY_PATH
 
 # ENV spark
@@ -77,48 +52,43 @@ ENV SPARK_HOME /usr/local/spark
 ENV PATH $PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
 ## install findspark
-RUN pip3 install findspark
-RUN pip3 install pyarrow
-RUN pip3 install pandas
+RUN pip3 install findspark pyarrow pandas
 
 ## spark-env.sh config
-RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_CORES=7 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo SPARK_WORKER_MEMORY=25G >> $SPARK_HOME/conf/spark-env.sh
-RUN echo ARROW_PRE_0_15_IPC_FORMAT=1 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export SPARK_CLASSPATH=$SPARK_HOME/jars >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export JAVA_HOME=/usr/java/default >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export PYSPARK_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
-RUN echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
+RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh \
+    && echo SPARK_WORKER_CORES=7 >> $SPARK_HOME/conf/spark-env.sh \
+    && echo SPARK_WORKER_MEMORY=25G >> $SPARK_HOME/conf/spark-env.sh \
+    && echo ARROW_PRE_0_15_IPC_FORMAT=1 >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath) >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export SPARK_CLASSPATH=$SPARK_HOME/jars >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export JAVA_HOME=/usr/java/default >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export PYSPARK_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh \
+    && echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
 
 ## spark-defaults config & slaves
 #ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
-RUN mkdir /tmp/spark-events
-RUN $SPARK_HOME/sbin/start-history-server.sh
+RUN mkdir /tmp/spark-events \
+    && $SPARK_HOME/sbin/start-history-server.sh
 
 ADD workers $HADOOP_HOME/etc/hadoop/workers
 RUN cp $HADOOP_HOME/etc/hadoop/workers $SPARK_HOME/conf/slaves
 
-#COPY bootstrap.sh /etc/bootstrap.sh
-#RUN chown root.root /etc/bootstrap.sh
-#RUN chmod 700 /etc/bootstrap.sh
 
 #COPY .py files
 COPY hadoop_spark_slaves.py /root/hadoop_spark_slaves.py
 COPY hdfsupload.py /root/hdfsupload.py
 
-RUN chown root.root /root/hadoop_spark_slaves.py
-RUN chmod 700 /root/hadoop_spark_slaves.py
-RUN chown root.root /root/hdfsupload.py
-RUN chmod 700 /root/hdfsupload.py
+RUN chown root.root /root/hadoop_spark_slaves.py \
+    && chmod 700 /root/hadoop_spark_slaves.py \
+    && chown root.root /root/hdfsupload.py \
+    && chmod 700 /root/hdfsupload.py
 
 #COPY scala JAR file
 COPY index2dict_2.11-0.1.jar /usr/local/spark/jars/index2dict_2.11-0.1.jar
 
-RUN chown root.root /usr/local/spark/jars/index2dict_2.11-0.1.jar
-RUN chmod 700 /usr/local/spark/jars/index2dict_2.11-0.1.jar
+RUN chown root.root /usr/local/spark/jars/index2dict_2.11-0.1.jar \
+    && chmod 700 /usr/local/spark/jars/index2dict_2.11-0.1.jar
 
 # Spark Web UI, History Server Port
 EXPOSE 8080 18080
@@ -128,11 +98,7 @@ EXPOSE 7077
 EXPOSE 9898 9797
 
 #install sbt for SCALA
-RUN apt-get install apt-transport-https
-RUN echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
-RUN apt-get update
-RUN apt-get -y install sbt
-
-
-#ENTRYPOINT ["/etc/bootstrap.sh"]
+RUN apt-get install apt-transport-https \
+    && echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 \
+    && apt-get update && apt-get -y install sbt
