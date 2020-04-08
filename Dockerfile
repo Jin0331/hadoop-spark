@@ -83,7 +83,8 @@ RUN chown root.root /root/hadoop_spark_slaves.py \
     && chmod 700 /root/hdfsupload.py
 
 #COPY scala JAR file
-COPY index2dict_2.11-0.1.jar /usr/local/spark/jars/index2dict_2.11-0.1.jar
+#COPY index2dict_2.11-0.1.jar /usr/local/spark/jars/index2dict_2.11-0.1.jar
+COPY scalaudf_2.11-0.1.jar /usr/local/spark/jars/scalaudf_2.11-0.1.jar
 
 RUN chown root.root /usr/local/spark/jars/index2dict_2.11-0.1.jar \
     && chmod 700 /usr/local/spark/jars/index2dict_2.11-0.1.jar
