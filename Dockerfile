@@ -65,7 +65,6 @@ RUN cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh \
     && echo export PYSPARK_DRIVER_PYTHON=/usr/bin/python3 >> $SPARK_HOME/conf/spark-env.sh
 
 ## spark-defaults config & slaves
-#ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 RUN mkdir /tmp/spark-events \
     && $SPARK_HOME/sbin/start-history-server.sh
 
