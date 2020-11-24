@@ -14,7 +14,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa -y \
 
 
 # jupyter notebook or lab install
-RUN pip3 install jupyter && pip3 install jupyterlab && jupyter notebook --generate-config \
+RUN pip3 install jupyter && jupyter notebook --generate-config \
     && sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter/jupyter_notebook_config.py \
     && sed -i "s/^#c.NotebookApp.open_browser = True/c.NotebookApp.open_browser = False/" ~/.jupyter/jupyter_notebook_config.py \
     && sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py \
@@ -94,12 +94,10 @@ EXPOSE 7077
 # diver_port
 EXPOSE 9898 9797
 
-#install sbt for SCALA
-RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
- && curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add \
- && apt-get update && apt-get -y install sbt
-
-
+##install sbt for SCALA
+#RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
+# && curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add \
+# && apt-get update && apt-get -y install sbt
 #RUN apt-get install apt-transport-https \
 #    && echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list \
 #    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 \
