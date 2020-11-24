@@ -20,6 +20,7 @@ RUN pip3 install jupyter && jupyter notebook --generate-config \
     && sed -i "s/^#c.NotebookApp.allow_root = False/c.NotebookApp.allow_root = True/" ~/.jupyter/jupyter_notebook_config.py \
     && pip3 install jupyterthemes \
     && jt -t monokai -f anka -fs 12 -nf anka -tf anka -dfs 11 -tfs 12 -ofs 11 -T -N -cellw 85% -kl
+RUN pip3 install jupyterlab
 
 # vscode
 RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz \
