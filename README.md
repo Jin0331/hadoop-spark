@@ -11,7 +11,10 @@
 
 - - -
 
-### Docker Swarm init
+### Docker Swarm init 
+
+* 참고링크 : https://towardsdatascience.com/diy-apache-spark-docker-bb4f11c10d24
+
 ``docker swarm init --advertise-addr [server IP]``
 
  * node에서 ``docker swarm join --token [token]``
