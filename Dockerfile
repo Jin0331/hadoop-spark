@@ -5,10 +5,12 @@ USER root
 
 # scala, r install
 RUN apt-get update && apt-get -y install --no-install-recommends --no-install-suggests \
-        ca-certificates software-properties-common gnupg2 gnupg1 \
+        ca-certificates software-properties-common \
       && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
       && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/' \
       && apt-get install r-base 
+
+RUN apt-get update && apt-get -y install scala
 
 # python 3.7 install
 RUN apt-get update \
