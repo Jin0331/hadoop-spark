@@ -3,18 +3,9 @@ MAINTAINER sempre813
 
 USER root
 
-# scala, r install
-RUN apt-get update && apt-get -y install --no-install-recommends --no-install-suggests \
-        ca-certificates software-properties-common \
-      && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
-      && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/' \
-      && apt-get install -y install r-base 
-
-RUN apt-get update && apt-get -y install scala
-
 # python 3.7 install
 RUN apt-get update \
-   && apt-get install -y nano python software-properties-common 
+   && apt-get install -y nano scala python software-properties-common 
 
 RUN add-apt-repository ppa:deadsnakes/ppa -y \
     && apt-get update && apt-get install -y build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev \
