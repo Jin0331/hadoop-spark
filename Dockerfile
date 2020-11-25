@@ -3,16 +3,22 @@ MAINTAINER sempre813
 
 USER root
 
-# apt-install
+# scala, r install
+RUN apt-get install apt-transport-https software-properties-common \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
+    && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' \
+    && pt-get update && apt-get install r-base
+
+
+# python 3.7 install
 RUN apt-get update \
-   && apt-get install -y nano scala python software-properties-common 
+   && apt-get install -y nano python software-properties-common 
+
 RUN add-apt-repository ppa:deadsnakes/ppa -y \
     && apt-get update && apt-get install -y build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev \
     && apt-get update && apt-get install -y python3-pip python3.7-dev python3.7 \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2
                           
-
-
 # jupyter notebook or lab install
 RUN pip3 install jupyter && jupyter notebook --generate-config \
     && sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter/jupyter_notebook_config.py \
