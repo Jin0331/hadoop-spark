@@ -3,15 +3,16 @@ MAINTAINER sempre813
 
 USER root
 
-# python 3.7 install
+# apt-install
 RUN apt-get update \
    && apt-get install -y nano scala python software-properties-common 
-
 RUN add-apt-repository ppa:deadsnakes/ppa -y \
     && apt-get update && apt-get install -y build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev \
     && apt-get update && apt-get install -y python3-pip python3.7-dev python3.7 \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 2
                           
+
+
 # jupyter notebook or lab install
 RUN pip3 install jupyter && jupyter notebook --generate-config \
     && sed -i "s/^#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip='*'/" ~/.jupyter/jupyter_notebook_config.py \
@@ -26,6 +27,8 @@ RUN wget https://github.com/cdr/code-server/releases/download/2.1692-vsc1.39.2/c
     && tar xf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz \
     && mv code-server2.1692-vsc1.39.2-linux-x86_64 vscode \
     && rm -rf code-server2.1692-vsc1.39.2-linux-x86_64.tar.gz
+
+EXPOSE 8989
 
 # spark 2.4.5 without Hadoop
 RUN wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-without-hadoop.tgz \
@@ -85,8 +88,12 @@ COPY scalaudf_2.11-0.1.jar /usr/local/spark/jars/scalaudf_2.11-0.1.jar
 RUN chown root.root /usr/local/spark/jars/scalaudf_2.11-0.1.jar \
     && chmod 700 /usr/local/spark/jars/scalaudf_2.11-0.1.jar
 
-# Using PORT expose
-EXPOSE 8080 18080 8989 7077 9898 9797
+# Spark Web UI, History Server Port
+EXPOSE 8080 18080
+EXPOSE 7077
+
+# diver_port
+EXPOSE 9898 9797
 
 ##install sbt for SCALA
 #RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
